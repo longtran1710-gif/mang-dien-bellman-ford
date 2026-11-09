@@ -30,7 +30,6 @@ struct KetQua {
     int soLuot = 0;
 };
 
-// Đọc cả một token để không nhận nhầm số thập phân thành số nguyên.
 ll docSoNguyen(istream& input, const string& ten) {
     string token;
     if (!(input >> token)) {
@@ -74,7 +73,6 @@ MangDien nhap(istream& input, ostream& output) {
     MangDien mang{static_cast<int>(n), static_cast<int>(s), {}};
     mang.dsCanh.reserve(static_cast<size_t>(2 * m));
 
-    // Đảm bảo chi phí mọi đường đi đơn đều nhỏ hơn INF.
     const ll maxChiPhi = (INF - 1) / max(1LL, n - 1);
 
     output << "Nhập " << m << " tuyến, mỗi tuyến: u v chi_phi\n"
@@ -104,7 +102,6 @@ MangDien nhap(istream& input, ostream& output) {
             );
         }
 
-        // Mỗi tuyến hai chiều được biểu diễn bằng hai cạnh.
         mang.dsCanh.push_back({
             static_cast<int>(u), static_cast<int>(v), chiPhi
         });
@@ -115,7 +112,6 @@ MangDien nhap(istream& input, ostream& output) {
     return mang;
 }
 
-// Nhận mạng đã được kiểm tra hợp lệ trong nhap().
 KetQua bellmanFord(const MangDien& mang, ostream* nhatKy = nullptr) {
     KetQua kq;
     kq.chiPhi.assign(mang.soTram + 1, INF);
