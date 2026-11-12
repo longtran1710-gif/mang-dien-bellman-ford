@@ -215,10 +215,18 @@ void inKetQua(
 }
 
 void huongDan(ostream& output) {
-    output << "Ứng dụng Ford–Bellman cho mạng điện — bản terminal 0.1\n"
-           << "Cách chạy: ./bellmanford [--chi-tiet]\n"
-           << "           ./bellmanford --chi-tiet < du_lieu.txt\n"
-           << "Dữ liệu: n m s, tiếp theo là m bộ u v chi_phi.\n"
+    output << "Ứng dụng Ford–Bellman cho mạng điện — bản terminal 0.1\n";
+
+#ifdef _WIN32
+    output << "Cách chạy trong Command Prompt (CMD):\n"
+           << "  .\\bellmanford.exe [--chi-tiet]\n"
+           << "  .\\bellmanford.exe --chi-tiet < du_lieu.txt\n";
+#else
+    output << "Cách chạy: ./bellmanford [--chi-tiet]\n"
+           << "           ./bellmanford --chi-tiet < du_lieu.txt\n";
+#endif
+
+    output << "Dữ liệu: n m s, tiếp theo là m bộ u v chi_phi.\n"
            << "Trạm được đánh số 1..n. Tuyến nối hai chiều.\n"
            << "1 <= n <= " << MAX_TRAM
            << "; 0 <= m <= " << MAX_TUYEN << ".\n"
@@ -228,22 +236,25 @@ void huongDan(ostream& output) {
 
 int main(int argc, char* argv[]) {
     bool chiTiet = false;
+    bool xemHuongDan = false;
 
     for (int i = 1; i < argc; ++i) {
         const string thamSo = argv[i];
 
         if (thamSo == "--help" || thamSo == "-h") {
-            huongDan(cout);
-            return 0;
-        }
-
-        if (thamSo == "--chi-tiet") {
+            xemHuongDan = true;
+        } else if (thamSo == "--chi-tiet") {
             chiTiet = true;
         } else {
             cerr << "Tham số không hợp lệ: " << thamSo
                  << ". Dùng --help để xem hướng dẫn.\n";
             return 1;
         }
+    }
+
+    if (xemHuongDan) {
+        huongDan(cout);
+        return 0;
     }
 
     try {
