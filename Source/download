@@ -1,0 +1,11 @@
+build*/
+.qtcreator/
+*.user
+*.user.*
+*.exe
+*.o
+*.obj
+ui_*.h
+moc_*.cpp
+preview-*.png
+Release/
